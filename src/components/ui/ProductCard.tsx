@@ -26,7 +26,10 @@ export default function ProductCard({
       at: Date.now(),
     });
     const url = resolveAffiliateUrl(product);
-    if (url !== e.currentTarget.href) {
+    // Compare against the raw source URL. `e.currentTarget.href` always
+    // returns the resolved absolute URL, so comparing resolver output to it
+    // would falsely trigger on relative hrefs like "#".
+    if (url !== product.affiliateUrl) {
       e.preventDefault();
       window.location.href = url;
     }
