@@ -1,0 +1,55 @@
+# cPanel / Apache fallback rules for nuoithucung-web
+#
+# This .htaccess is used in two scenarios:
+#
+#   1. Node.js (standalone) mode — cPanel's "Setup Node.js App" already
+#      proxies every request to the Next server, so most of these rules
+#      are a no-op. The Deflate + Cache-Control blocks still give you
+#      extra performance for static assets served by Apache.
+#
+#   2. Static export mode (NEXT_OUTPUT=export) — Next outputs the site
+#      to ./out which you upload to public_html. The "pretty URL" rules
+#      below rewrite /path  →  /path.html so Apache serves the right
+#      file without a trailing-slash redirect.
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # If the requested file exists, serve it as-is.
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Pretty URLs for Next's static export: /ve-sinh → /ve-sinh.html
+  RewriteCond %{REQUEST_FILENAME}.html -f
+  RewriteRule ^([^.]+)$ $1.html [L]
+
+  # Fallback for client-side routing (SPA-like navigation after static export).
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^ /index.html [L]
+</IfModule>
+
+# Gzip everything text-ish.
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript
+  AddOutputFilterByType DEFLATE application/javascript application/json application/xml
+  AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# Long-cache Next's fingerprinted assets.
+<IfModule mod_headers.c>
+  <FilesMatch "\.(?:ico|css|js|woff2?|ttf|eot|png|jpe?g|gif|webp|avif|svg)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.(?:html)$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+# Basic security headers.
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set X-Frame-Options "SAMEORIGIN"
+</IfModule>
