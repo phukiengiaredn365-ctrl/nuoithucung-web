@@ -56,12 +56,11 @@ export default function CategoryHero({
           <div className="no-scrollbar mt-6 flex items-center gap-2 overflow-x-auto">
             {filters.map((f) => {
               const isActive = f.slug === activeFilter;
-              const href = baseHref
-                ? `${baseHref}/${f.slug}`
-                : `#${f.slug}`;
+              const href = `${baseHref ?? ""}#${f.slug}`;
               return (
                 <Link
                   key={f.slug}
+                  id={f.slug}
                   href={href}
                   className={`whitespace-nowrap rounded-full border px-4 py-1.5 text-sm transition ${
                     isActive
