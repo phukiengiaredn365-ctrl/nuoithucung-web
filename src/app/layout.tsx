@@ -25,7 +25,9 @@ export const metadata: Metadata = {
   },
   description:
     "Kiến thức, review và deal hữu ích dành cho Sen nuôi chó mèo. Cập nhật mỗi tuần từ đội ngũ PetCare.",
-  metadataBase: new URL("https://nuoithucung.com"),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ?? "https://nuoithucung.com"
+  ),
   openGraph: {
     type: "website",
     siteName: "NuoiThuCung.com",

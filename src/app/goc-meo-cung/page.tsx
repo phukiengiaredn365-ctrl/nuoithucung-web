@@ -47,7 +47,7 @@ export default function GocMeoCungPage() {
       <div className="container-page grid gap-10 py-10 md:py-14 lg:grid-cols-3 lg:gap-12">
         <div className="space-y-10 lg:col-span-2">
           <FeaturedPost post={featured} />
-          <PostGrid posts={meoPosts.slice(0, 6)} />
+          <PostGrid posts={meoPosts.slice(1, 7)} />
         </div>
         <Sidebar
           popular={popular}
