@@ -9,7 +9,10 @@ import {
   getTopPicks,
 } from "@/lib/wp";
 
-export const revalidate = 300; // ISR — 5 min
+// ISR every 5 min on standalone; disabled under `output: "export"` (Apache
+// shared hosting) because static export has no server to revalidate on.
+export const revalidate =
+  process.env.NEXT_OUTPUT === "export" ? false : 300;
 
 export default async function HomePage() {
   const [stories, deep, products, posts] = await Promise.all([
