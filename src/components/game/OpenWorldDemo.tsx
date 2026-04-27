@@ -691,6 +691,7 @@ export default function OpenWorldDemo() {
     let weatherTimer = 0;
     let missionHold = 0;
     let socialTimer = 0;
+    let finalMissionComplete = false;
 
     const resize = () => {
       const parent = canvas.parentElement;
@@ -713,6 +714,8 @@ export default function OpenWorldDemo() {
     };
 
     const completeMission = () => {
+      if (finalMissionComplete) return;
+
       cash += mission.reward;
       social += 9 + wanted * 3;
       particles.push({
@@ -752,6 +755,7 @@ export default function OpenWorldDemo() {
           reward: 3000,
         };
         wanted = Math.max(0, wanted - 2);
+        finalMissionComplete = true;
       }
     };
 
@@ -904,9 +908,12 @@ export default function OpenWorldDemo() {
 
     const updateMission = (dt: number) => {
       const nearMarker = distance(player, mission.marker) < 78;
-      if (nearMarker) {
+      if (!finalMissionComplete && nearMarker) {
         missionHold += dt;
-        if (missionHold > 0.9) completeMission();
+        if (missionHold > 0.9) {
+          completeMission();
+          missionHold = 0;
+        }
       } else {
         missionHold = 0;
       }
