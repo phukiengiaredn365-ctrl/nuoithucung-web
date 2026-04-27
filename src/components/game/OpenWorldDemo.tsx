@@ -717,7 +717,7 @@ export default function OpenWorldDemo() {
       if (finalMissionComplete) return;
 
       cash += mission.reward;
-      social += 9 + wanted * 3;
+      social += Math.round(9 + wanted * 3);
       particles.push({
         x: player.x,
         y: player.y,
