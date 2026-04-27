@@ -803,6 +803,10 @@ export default function OpenWorldDemo() {
       setKey(event.key.toLowerCase(), false);
     };
 
+    const onBlur = () => {
+      keysRef.current.clear();
+    };
+
     const updateVehicles = (dt: number) => {
       vehicles.forEach((vehicle) => {
         if (vehicle.id === inVehicleId) {
@@ -999,6 +1003,7 @@ export default function OpenWorldDemo() {
     window.addEventListener("resize", resize);
     window.addEventListener("keydown", onKeyDown);
     window.addEventListener("keyup", onKeyUp);
+    window.addEventListener("blur", onBlur);
     animation = requestAnimationFrame(loop);
 
     return () => {
@@ -1006,6 +1011,7 @@ export default function OpenWorldDemo() {
       window.removeEventListener("resize", resize);
       window.removeEventListener("keydown", onKeyDown);
       window.removeEventListener("keyup", onKeyUp);
+      window.removeEventListener("blur", onBlur);
     };
   }, []);
 
