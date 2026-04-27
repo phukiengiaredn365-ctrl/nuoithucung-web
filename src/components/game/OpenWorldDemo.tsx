@@ -336,11 +336,15 @@ function drawPalm(ctx: CanvasRenderingContext2D, x: number, y: number, scale: nu
   ctx.restore();
 }
 
-function drawBuildings(ctx: CanvasRenderingContext2D, buildings: Building[], night: number) {
+function drawBuildings(ctx: CanvasRenderingContext2D, buildings: Building[], camera: Vec, night: number) {
   buildings.forEach((building, index) => {
     const height = building.floors * 14;
+    const screenX = building.x - camera.x;
+    const screenY = building.y - camera.y;
+    if (screenX < -220 || screenY < -260 || screenX > ctx.canvas.clientWidth + 220 || screenY > ctx.canvas.clientHeight + 220) return;
+
     ctx.save();
-    ctx.translate(building.x, building.y);
+    ctx.translate(screenX, screenY);
 
     ctx.fillStyle = "rgba(0,0,0,0.22)";
     ctx.beginPath();
@@ -573,7 +577,8 @@ function drawScene(
     wanted: number;
   },
 ) {
-  const { width, height } = ctx.canvas;
+  const width = ctx.canvas.clientWidth || ctx.canvas.width;
+  const height = ctx.canvas.clientHeight || ctx.canvas.height;
   const dayAmount = Math.max(0.12, Math.sin(state.timeOfDay * TWO_PI - Math.PI / 5) * 0.5 + 0.5);
   const night = 1 - dayAmount;
   const sky = ctx.createLinearGradient(0, 0, 0, height);
@@ -598,7 +603,7 @@ function drawScene(
   }
   ctx.restore();
 
-  drawBuildings(ctx, state.buildings, night);
+  drawBuildings(ctx, state.buildings, state.camera, night);
   drawCivilians(ctx, state.civilians, state.camera);
   state.vehicles.forEach((vehicle) => {
     drawVehicle(ctx, vehicle, state.camera, night, vehicle.id === state.inVehicleId);
@@ -1008,7 +1013,7 @@ export default function OpenWorldDemo() {
   const wantedStars = Array.from({ length: 5 }, (_, index) => index < hud.wanted);
 
   return (
-    <section className="relative overflow-hidden bg-slate-950 text-white">
+    <section id="neon-vice" className="relative overflow-hidden bg-slate-950 text-white">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(45,212,191,0.22),transparent_32%),radial-gradient(circle_at_80%_10%,rgba(244,63,94,0.2),transparent_30%),linear-gradient(180deg,rgba(15,23,42,0.1),rgba(15,23,42,0.95))]" />
 
       <div className="relative z-10 border-b border-white/10">
