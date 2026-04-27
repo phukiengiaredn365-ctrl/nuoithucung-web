@@ -1064,12 +1064,12 @@ export default function OpenWorldDemo() {
         </div>
       </div>
 
-      <div className="relative z-10 mx-auto max-w-[1440px] px-3 py-4 sm:px-5 lg:px-6">
+      <div id="open-world" className="relative z-10 mx-auto max-w-[1440px] scroll-mt-24 px-3 py-4 sm:px-5 lg:px-6">
         <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-slate-900 shadow-[0_24px_90px_rgba(0,0,0,0.45)]">
           <canvas ref={canvasRef} className="block w-full cursor-crosshair" aria-label="Neon Vice game canvas" />
 
           <div className="pointer-events-none absolute left-4 top-4 flex max-w-[calc(100%-2rem)] flex-wrap gap-3">
-            <div className="rounded-2xl border border-white/10 bg-slate-950/70 px-4 py-3 text-sm shadow-2xl backdrop-blur">
+            <div id="wanted-system" className="scroll-mt-24 rounded-2xl border border-white/10 bg-slate-950/70 px-4 py-3 text-sm shadow-2xl backdrop-blur">
               <p className="text-xs uppercase tracking-[0.18em] text-slate-400">Nhiệm vụ</p>
               <p className="mt-1 font-bold text-white">{hud.mission.title}</p>
               <p className="mt-1 max-w-[260px] text-xs leading-5 text-slate-300">{hud.mission.objective}</p>
