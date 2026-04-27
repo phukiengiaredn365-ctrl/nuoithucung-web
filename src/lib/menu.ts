@@ -11,15 +11,6 @@ import type { MenuItem } from "./types";
  */
 export const PRIMARY_MENU: MenuItem[] = [
   {
-    label: "Game Demo",
-    href: "/game",
-    children: [
-      { label: "Neon Vice", href: "/game#neon-vice" },
-      { label: "Open World", href: "/game#open-world" },
-      { label: "Wanted System", href: "/game#wanted-system" },
-    ],
-  },
-  {
     label: "Góc Cún Cưng",
     href: "/goc-cun-cung",
     children: [
@@ -67,6 +58,16 @@ export const PRIMARY_MENU: MenuItem[] = [
     ],
   },
 ];
+
+export const GAME_MENU: MenuItem = {
+  label: "Game Demo",
+  href: "/game",
+  children: [
+    { label: "Neon Vice", href: "/game#neon-vice" },
+    { label: "Open World", href: "/game#open-world" },
+    { label: "Wanted System", href: "/game#wanted-system" },
+  ],
+};
 
 export const SOCIAL_LINKS = [
   { label: "Facebook", href: "https://facebook.com/", icon: "facebook" as const },
