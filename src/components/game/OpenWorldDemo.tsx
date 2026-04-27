@@ -461,7 +461,7 @@ function drawCivilians(ctx: CanvasRenderingContext2D, civilians: Civilian[], cam
   civilians.forEach((civilian) => {
     const sx = civilian.x - camera.x;
     const sy = civilian.y - camera.y;
-    if (sx < -60 || sy < -60 || sx > ctx.canvas.width + 60 || sy > ctx.canvas.height + 60) return;
+    if (sx < -60 || sy < -60 || sx > ctx.canvas.clientWidth + 60 || sy > ctx.canvas.clientHeight + 60) return;
 
     ctx.fillStyle = civilian.filming ? "#facc15" : "#f9fafb";
     ctx.beginPath();
