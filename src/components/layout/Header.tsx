@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Search } from "lucide-react";
 import Logo from "./Logo";
 import MobileMenu from "./MobileMenu";
-import { PRIMARY_MENU, SOCIAL_LINKS } from "@/lib/menu";
+import { GAME_MENU, PRIMARY_MENU, SOCIAL_LINKS } from "@/lib/menu";
 import DesktopNav from "./DesktopNav";
 import {
   FacebookIcon,
@@ -26,7 +26,7 @@ export default function Header() {
           <Logo />
         </div>
 
-        <DesktopNav items={PRIMARY_MENU} />
+        <DesktopNav items={[GAME_MENU, ...PRIMARY_MENU]} />
 
         <div className="ml-auto flex items-center gap-1.5 sm:gap-2">
           <button
@@ -55,7 +55,7 @@ export default function Header() {
             })}
           </div>
 
-          <MobileMenu items={PRIMARY_MENU} />
+          <MobileMenu items={[GAME_MENU, ...PRIMARY_MENU]} />
         </div>
       </div>
     </header>
